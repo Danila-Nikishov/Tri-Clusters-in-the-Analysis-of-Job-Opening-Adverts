@@ -1,0 +1,5 @@
+artifacts
+reports
+.venv_triclustering
+__pycache__
+*.csv
