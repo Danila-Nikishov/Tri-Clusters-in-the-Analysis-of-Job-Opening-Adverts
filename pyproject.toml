@@ -1,0 +1,25 @@
+[project]
+name = "course-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Danila_Nikishov", email = "danilanikishov2003@gmail.com" }
+]
+requires-python = "==3.12.4"
+dependencies = [
+    "ipykernel>=7.3.0",
+    "numpy>=2.5.2",
+    "pandas>=3.0.5",
+    "python-dotenv",
+    "pyyaml>=6.0.3",
+    "requests>=2.34.2",
+    "tqdm>=4.70.0",
+]
+
+[project.scripts]
+course-project = "course_project:main"
+
+[build-system]
+requires = ["uv_build>=0.12.8,<0.13.0"]
+build-backend = "uv_build"

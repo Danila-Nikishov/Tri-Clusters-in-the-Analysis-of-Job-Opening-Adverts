@@ -1,5 +1,9 @@
-artifacts
+artifacts/3D_relevance_matrices
+artifacts/clusters
+artifacts/relevance_data
 reports
-.venv_triclustering
+.venv
 __pycache__
-*.csv
+.vscode
+.env
+uv.lock
