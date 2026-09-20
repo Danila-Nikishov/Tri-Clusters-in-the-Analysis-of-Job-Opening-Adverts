@@ -28,3 +28,15 @@ relevant_proles:
 
 # URL для получения вакансий
 vacancies_url: https://api.hh.ru/vacancies
+
+# Год для парсинга
+year: 2026
+
+# Месяц для парсинга
+month: 9
+
+# Количество страниц для парсинг
+n_pages_to_parse: 10
+
+# Количество вакансий на странице
+n_vacancies_per_page: 100
