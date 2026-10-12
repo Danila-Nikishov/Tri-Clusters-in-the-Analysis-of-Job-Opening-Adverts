@@ -1,10 +1,14 @@
 # Вспомогательные функции для извлечения и обработки аспектов вакансий
 
 
+import pandas as pd
+import pyarrow
 import re
 import pymorphy3
 
 from functools import lru_cache
+from pathlib import Path
+from collections import defaultdict
 
 
 _MORPH_INSTANCE = None
@@ -100,3 +104,49 @@ def classify_sentence(
             break
     is_change = int(sum(sent_types) > 0)
     return is_change, sent_types
+
+
+def count_ngrams(data: pd.DataFrame, N: int, save_directory: Path = Path("data"), cut_boundary: float = 0.001,
+                 labels: list[str] = ["requirements", "responsibilities", "conditions"]) -> None:
+    """
+    Функция принимает на вход датафрейм `data`, в котором есть столбцы `labels`.
+    В каждой ячейке каждого из столбцов находится список строк. Из каждой строки, предварительно 
+    разбитой по пробелам, извлекаются `N`-граммы. Вычисляется суммарное количество `N`-грамм, 
+    исключаются из рассмотрения `N`-граммы, доля которых меньше чем `cut_boundary` от data.shape[0].
+    На выходе функция выдаёт excel таблицу с len(labels) листами, на каждом из которых приведены
+    все `N`-граммы вместе с их встречаемостью в `data`.
+    """
+    dataframes = {}
+    save_directory.mkdir(parents = True, exist_ok = True)
+
+    for label in labels:
+        aspect_sentences = data[label]
+        count_aspect_ngram = defaultdict(int)
+        for list_of_sentences in aspect_sentences:
+            for sentence in list_of_sentences:
+                tokens_list = sentence.split(" ")
+                if len(tokens_list) < N:
+                    continue
+                for i in range(len(tokens_list) - N + 1):
+                    ngramm = " ".join(tokens_list[i : i + N])
+                    count_aspect_ngram[ngramm] += 1
+        
+        min_count = round(data.shape[0] * cut_boundary)
+        ngramms_to_delete = set()
+        for ngramm, count in count_aspect_ngram.items():
+            if count < min_count:
+                ngramms_to_delete.add(ngramm)
+        for ngramm in ngramms_to_delete:
+            del count_aspect_ngram[ngramm]
+
+        ngramms = list(count_aspect_ngram.keys())
+        counts = list(count_aspect_ngram.values())
+        aspect_count = pd.DataFrame(
+            {label: ngramms, "count": counts}
+        ).sort_values(by="count", ascending=True)
+        dataframes[label] = aspect_count
+    
+    with pd.ExcelWriter(save_directory / f"{N}grams_aspect_token_count.xlsx") as writer:
+        for label, dataframe in dataframes.items():
+            dataframe.to_excel(writer, sheet_name = label, index = False)
+        
