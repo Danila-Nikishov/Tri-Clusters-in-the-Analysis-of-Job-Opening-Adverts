@@ -1,6 +1,4 @@
-artifacts/3D_relevance_matrices
-artifacts/clusters
-artifacts/relevance_data
+artifacts
 reports
 .venv
 __pycache__
