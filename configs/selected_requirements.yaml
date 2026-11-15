@@ -1,0 +1,47 @@
+SELECTED_REQUIREMENTS:
+  1_grams: [
+    vue.js, lacp, dbt, archicad, vba, bitbucket, nexus, next.js, maven, flutter,
+    datalens, camunda, unix, ftp, argocd, rdp, scada, n8n, graphql, smtp, 
+    selenium, hive, swift, ldap, scikit-learn, a/b, langgraph, sip, stp, qos, 
+    cmake, golang, tcpdump, draw.io, asp.net, revit, tls, esxi, vsphere, snmp,
+    spi, cms, corel, centos, mcp, junit, bitrix, angular, dss, qt, asterisk,
+    miro, openshift, langchain, modbus, django, openapi, macos, vue, edr, с++,
+    kibana, ssh, laravel, websocket, ids/ips, playwright, wireshark, blender,
+    orm, pytest, debian, superset, ipsec, vipnet, greenplum, битрикс, pytorch,
+    elasticsearch, unity, hadoop, node.js, ethernet, k8s, itil, kotlin, numpy,
+    ubuntu, r, waf, helm, mongodb, grpc, kanban, spark, firewall, ospf, swagger,
+    tableau, bgp, proxmox, coreldraw, terraform, fastapi, bitrix24, css, html,
+    ngfw, ios, hyper-v, pandas, 1c, rag, wms, nat, nginx, c, c++, airflow, 
+    android, osi, scrum, typescript, powershell, autocad, ооп, c#, xml, postman,
+    ml, jenkins, битрикс24, siem, net, agile, react, http, php, oracle, 
+    javascript, rabbitmq, cisco, prometheus, powerpoint, ansible, redis, 
+    illustrator, json, vlan, uml, clickhouse, ai-агент, zabbix, amp, figma, 
+    bash, llm, grafana, photoshop, crm, java, bpmn, dhcp, word, 
+    многозадачность, kafka, erp, коммуникабельность, kubernetes, портфолио, 
+    tcp/ip, dns, jira, docker, git, excel, английский, windows, python, linux, 
+    sql, 1с
+  ]
+  2_grams: [
+    компьютерный зрение, математический статистика, unreal engine, 
+    теория вероятность, spring boot, экономический образование, power point,
+    компьютерный сеть, продуктовый метрика, машинный обучение,
+    клиент-серверный архитектура, серверный оборудование, 
+    система виртуализация, навык администрирование, грамотный речь, power bi,
+    сетевой протокол, микросервисный архитектура, сетевой технология, rest api,
+    сетевой оборудование, опыт администрирование, база данные,
+    технический образование
+  ]
+  3_grams: [
+    высокий образование экономический, высокий профессиональный технический,
+    профессиональный технический образование, образование высокий технический,
+    коммерческий опыт разработка, средний профессиональный образование,
+    готовность к командировка, опыт коммерческий разработка,
+    высокий технический образование
+  ]
+  4_grams: [
+    опыт работа в банк, анализ и формализация требование, 
+    сбор и формализация требование, алгоритм и структура данные, 
+    работать в условие многозадачность, опыт работа в банковский, 
+    понимание жизненный цикл разработка, сбор и анализ требование, 
+    работать в режим многозадачность, умение работать в команда
+  ]
