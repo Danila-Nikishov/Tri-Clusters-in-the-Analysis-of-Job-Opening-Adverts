@@ -106,13 +106,13 @@ def classify_sentence(
     return is_change, sent_types
 
 
-def count_ngrams(data: pd.DataFrame, N: int, save_directory: Path = Path("data"), cut_boundary: float = 0.001,
+def count_ngrams(data: pd.DataFrame, N: int, save_directory: Path = Path("data"), min_token_count: int = 100,
                  labels: list[str] = ["requirements", "responsibilities", "conditions"]) -> None:
     """
     Функция принимает на вход датафрейм `data`, в котором есть столбцы `labels`.
     В каждой ячейке каждого из столбцов находится список строк. Из каждой строки, предварительно 
     разбитой по пробелам, извлекаются `N`-граммы. Вычисляется суммарное количество `N`-грамм, 
-    исключаются из рассмотрения `N`-граммы, доля которых меньше чем `cut_boundary` от data.shape[0].
+    исключаются из рассмотрения `N`-граммы, количество которых меньше чем `min_token_count`.
     На выходе функция выдаёт excel таблицу с len(labels) листами, на каждом из которых приведены
     все `N`-граммы вместе с их встречаемостью в `data`.
     """
@@ -131,10 +131,9 @@ def count_ngrams(data: pd.DataFrame, N: int, save_directory: Path = Path("data")
                     ngramm = " ".join(tokens_list[i : i + N])
                     count_aspect_ngram[ngramm] += 1
         
-        min_count = round(data.shape[0] * cut_boundary)
         ngramms_to_delete = set()
         for ngramm, count in count_aspect_ngram.items():
-            if count < min_count:
+            if count < min_token_count:
                 ngramms_to_delete.add(ngramm)
         for ngramm in ngramms_to_delete:
             del count_aspect_ngram[ngramm]
