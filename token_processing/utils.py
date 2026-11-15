@@ -22,8 +22,8 @@ def _ensure_morph_instance() -> None:
 
 
 def text_cleaning(text: str, PLUSES: list[str], DOTS: list[str], MINUSES: list[str], 
-                  RUBBISH_TAGS: list[str], RUBBISH_PUNCTUATION: list[str], TAGS_TO_SAVE: list[str],
-                  PUNCTUATION_TO_DELETE_ON_THE_BOUNDARIES: list[str]) -> str:
+                  RUBBISH_PUNCTUATION: list[str], PUNCTUATION_TO_DELETE_ON_THE_BOUNDARIES: list[str],
+                  RUBBISH_TAGS: list[str], TAGS_TO_SAVE: list[str], delete_all_tags: bool = False) -> str:
     """
     Функция очистки и нормализации описания вакансии.
     Описание значения аргументов смотреть в token_extraction.yaml.
@@ -36,7 +36,8 @@ def text_cleaning(text: str, PLUSES: list[str], DOTS: list[str], MINUSES: list[s
     - Замена символов, похожих на минус, на -
     - Удаление бессодержательной пунктуации
     - Удаление содержательной пунктуации в конце слов
-    4) Удаление бессодержательных тегов, сохранение содержательных
+    4) Удаление бессодержательных тегов, сохранение содержательных 
+       ИЛИ удаление всех тегов (контролируется флагом `delete_all_tags`)
     5) Удаление лишних пробелов
     """
 
@@ -58,10 +59,13 @@ def text_cleaning(text: str, PLUSES: list[str], DOTS: list[str], MINUSES: list[s
         cleaned_text = re.sub(rf'(?<!\w){escaped_char}(\w+)', r' \1', cleaned_text)
         cleaned_text = re.sub(rf'(?:\s|^){escaped_char}(?:\s|$)', r' ', cleaned_text)
 
-    for tag in RUBBISH_TAGS:                                                           # Шаг 4
-        cleaned_text = cleaned_text.replace(tag, ' ')
-    for tag in TAGS_TO_SAVE:
-        cleaned_text = cleaned_text.replace(tag, f' {tag} ')
+    if not delete_all_tags:
+        for tag in RUBBISH_TAGS:                                                       # Шаг 4
+            cleaned_text = cleaned_text.replace(tag, ' ')
+        for tag in TAGS_TO_SAVE:
+            cleaned_text = cleaned_text.replace(tag, f' {tag} ')
+    else:
+        cleaned_text = re.sub(r"<.*?>", " ", cleaned_text, flags=re.DOTALL)
 
     cleaned_text = re.sub(r'\s+', ' ', cleaned_text)                                   # Шаг 5
     cleaned_text = cleaned_text.strip()
